@@ -1,14 +1,11 @@
 n = int(input())
-t, p = [0]*n, [0]*n
-for i in range(n):
-    t[i], p[i] = map(int, input().split())
+food = list(map(int, input().split(" ")))
 
-dp = [0] * 25
+size = [0]*101
+size[0] = food[0]
+size[1] = max(food[1], food[0])
 
-for i in range(n):
-    if dp[i] > dp[i+1]:
-        dp[i+1] = dp[i]
-    if dp[i + t[i]] < dp[i]+p[i]:
-        dp[i+t[i]] = dp[i] + p[i]
+for i in range(2, len(food)):
+    size[i] = max(size[i-1], size[i-2] + food[i])
 
-print(dp[n])
+print(size[len(food)-1])
